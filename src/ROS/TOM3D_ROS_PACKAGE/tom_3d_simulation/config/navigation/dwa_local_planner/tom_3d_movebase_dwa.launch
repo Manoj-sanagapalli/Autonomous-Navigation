@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+  
+ <!--<include file="$(find tom_3d_simulation)/config/amcl/launch/tom_3d_amcl.launch"/> required for localization-->
+
+ <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>    
+    <param name="footprint_padding" value="0.01"/>
+    <param name="controller_frequency" value="10.0"/>
+    <param name="controller_patience" value="100.0"/>
+    <param name="planner_frequency" value="2.0"/>
+
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/costmaps/$(env ROBOT)_costmap_common.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/costmaps/$(env ROBOT)_costmap_common.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/costmaps/$(env ROBOT)_costmap_local.yaml" command="load" />
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/costmaps/$(env ROBOT)_costmap_global.yaml" command="load" />
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/dwa_local_planner/$(env ROBOT)_planner_dwa.yaml" command="load" />
+    <remap from="/cmd_vel" to="/navigation/cmd_vel"/>
+    <remap from="/map" to="/rtabmap/grid_map"/>
+  </node>
+  
+
+
+</launch>

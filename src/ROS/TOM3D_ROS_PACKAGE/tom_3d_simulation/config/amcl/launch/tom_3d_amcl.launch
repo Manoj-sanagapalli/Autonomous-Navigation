@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+
+<!--
+
+<launch>
+
+  <arg name="env_map" default="$(find tom_3d_simulation)/maps/$(env MAP_NAME).yaml" />
+
+  MAP SERVER 
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg env_map)">
+  </node>
+
+  <node pkg="amcl" type="amcl" name="amcl">
+
+  <remap from="scan" to="sick_pls/scan"/>
+
+  <rosparam file="$(find tom_3d_simulation)/config/amcl/yaml/amcl_config.yaml" command="load" />
+
+ </node>
+
+</launch>
+-->
+
+<launch>
+
+  <arg name="env_map" default="$(find tom_3d_simulation)/maps/map.yaml" />
+
+  <!--MAP SERVER--> 
+  <node name="map_server" pkg="map_server" type="map_server" args="map">
+  </node>
+
+  <node pkg="amcl" type="amcl" name="amcl">
+
+  <remap from="scan" to="sick_pls/scan"/>
+
+  <rosparam file="$(find tom_3d_simulation)/config/amcl/yaml/amcl_config.yaml" command="load" />
+
+ </node>

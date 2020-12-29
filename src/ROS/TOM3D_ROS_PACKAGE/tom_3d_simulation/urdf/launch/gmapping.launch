@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+        <arg name="robotname" value="tom_3d"/>
+ 
+        <arg name="gmapping" value="true"/> 
+
+
+<!--******************************************** MAPPING **************************************************************-->
+ <group if="$(arg gmapping)">
+    <include file="$(find tom_3d_simulation)/config/gmapping/launch/$(arg robotname)_gmapping.launch"/>
+ </group> 
+
+
+</launch>
+

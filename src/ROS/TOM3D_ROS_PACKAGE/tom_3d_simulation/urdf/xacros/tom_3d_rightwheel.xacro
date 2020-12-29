@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tom_3d">
+  <xacro:macro name="tom_3d_rightwheel" params="name parent">
+   <joint name="${name}_joint" type="continuous">
+    <origin
+      xyz="-0.00076 -0.1534 0.075"
+      rpy="-4.2563E-44 0 0" />
+    <axis xyz="0 1 0"/>
+    <parent link="${parent}"/>
+    <child link="${name}_link"/>
+    <limit effort="30.0" velocity="1.0"/>
+    <joint_properties damping="1.0" friction="0.2"/>
+   </joint>
+   <link name="${name}_link" type="wheel">
+    <inertial>
+      <origin
+        xyz="7.2151E-08 -7.9842E-09 7.1683E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.47973" />
+      <inertia
+        ixx="0.0008385"
+        ixy="3.7844E-10"
+        ixz="3.4244E-08"
+        iyy="0.0015698"
+        iyz="1.1706E-09"
+        izz="0.00083856" />
+    </inertial>
+    <visual>
+     <origin xyz="0 0 0" rpy="0 0 0" />
+     <geometry>
+        <mesh filename="package://tom_3d_simulation/urdf/meshes/right_wheel_Link.STL"/>
+     </geometry>
+     <material name="tom_3d/Black" />
+    </visual>
+    <collision>
+     <origin xyz="0 0 0" rpy="0 0 0" />
+     <geometry>
+        <!--cylinder radius="0.075" length="0.042"/-->
+        <mesh filename="package://tom_3d_simulation/urdf/meshes/right_wheel_Link.STL"/>
+     </geometry>
+    </collision>
+   </link> 
+  </xacro:macro>
+</robot>

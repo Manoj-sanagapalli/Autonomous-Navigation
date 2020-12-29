@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<launch>
+<arg name="rvizconfig" default="$(find tom_3d_simulation)/urdf/tom_3d_config.rviz" />
+
+<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find tom_3d_simulation)/urdf/tom_3d.urdf.xacro'"/> 
+
+<param name="publish_frequency" value="20.0"/>
+<param name="rate" value="20.0"/>
+
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
+
+<!-- Publish the robot state -->
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+</node>
+
+<!-- Provide simulated control of the robot joint angles -->
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+<param name="use_gui" value="True" />
+</node>
+
+</launch>

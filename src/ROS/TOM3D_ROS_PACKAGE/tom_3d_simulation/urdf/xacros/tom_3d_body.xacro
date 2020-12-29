@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tom_3d">
+  <xacro:macro name="tom_3d_base" params="name ">
+    <link name="${name}">
+      <inertial>
+       <origin
+        xyz="-0.17709 -0.00065294 0.16037"
+        rpy="0 0 0" />
+       <mass
+        value="12.377" />
+       <inertia
+        ixx="0.5769"
+        ixy="0.0002763"
+        ixz="-0.041954"
+        iyy="0.58042"
+        iyz="0.0002722"
+        izz="0.1142" />
+      </inertial>
+      <visual>
+        <origin xyz="0.08339 0 0.0395" rpy="0 0 0" />
+        <geometry>
+            <mesh filename="package://tom_3d_simulation/urdf/meshes/base_link.STL"/>
+        </geometry>
+        <material name="tom_3d/Grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.0395" rpy="0 0 0" />
+        <geometry>
+	<!--cylinder radius="0.17" length = "0.7" /-->	
+          <mesh 
+		filename="package://tom_3d_simulation/urdf/meshes/base_link.STL"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+</robot>

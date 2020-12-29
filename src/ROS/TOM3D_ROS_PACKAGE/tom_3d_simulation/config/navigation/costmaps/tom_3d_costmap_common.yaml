@@ -1,0 +1,10 @@
+obstacle_range: 2.5
+raytrace_range: 3.0
+footprint: [[0.2,0.28],[-0.45,0.28],[-0.45,-0.28],[0.2,-0.28]]
+robot_radius: 0.36
+observation_sources: laser_scan_pls 
+laser_scan_pls: {sensor_frame: sick_pls_link , data_type: LaserScan, topic: sick_pls/scan, marking: true, clearing: true}
+
+map_type: costmap
+
+

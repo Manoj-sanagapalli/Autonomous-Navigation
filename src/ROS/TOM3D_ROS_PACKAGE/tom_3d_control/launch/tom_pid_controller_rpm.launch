@@ -1,0 +1,31 @@
+<launch>
+    <node name="pid_controller" pkg="tom_3d_control" type="pid_controller" ns="left_motor" output="screen" >
+      <param name="Kp" value="0.5" />
+      <param name="Ki" value="0.5" />
+      <param name="Kd" value="0.0" />
+      <param name="upper_limit" value="60" />
+      <param name="lower_limit" value="-60" />
+      <remap from="/rpm_values" to="/left_motor/rpm_values" />
+      <remap from="/rpm_control_values" to="/left_motor/rpm_control_values" />
+     </node>
+
+    <node name="pid_controller" pkg="tom_3d_control" type="pid_controller" ns="right_motor" output="screen" >
+      <param name="Kp" value="0.5" />
+      <param name="Ki" value="0.5" />
+      <param name="Kd" value="0.0" />
+      <param name="upper_limit" value="60" />
+      <param name="lower_limit" value="-60" />
+      <remap from="/rpm_values" to="/right_motor/rpm_values" />
+      <remap from="/rpm_control_values" to="/right_motor/rpm_control_values" />
+     </node>
+	
+    <!--<node name = "base_controller" pkg="tom_3d_control" type="base_controller" output="screen">
+	</node> -->
+
+    <!-- rqt_plot is a resource hog, so if you're seeing high CPU usage, don't launch it 
+    <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot"
+    args="/right_motor/rpm_values /right_motor/rpm_control_values
+    /left_motor/rpm_values /left_motor/rpm_control_values" />-->
+
+
+</launch>

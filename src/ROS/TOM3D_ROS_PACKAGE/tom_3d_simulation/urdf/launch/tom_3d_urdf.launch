@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<launch>
+        <arg name="robotname" value="tom_3d"/>
+
+       <arg name="rvizconfig" default="$(find tom_3d_simulation)/urdf/tom_3d_indigo_config.rviz" />
+
+        <arg name="model" default="$(find tom_3d_simulation)/urdf/tom_3d.urdf.xacro"/> 
+
+<!--**************************************** RVIZ LAUNCH ************************************************************-->
+
+ 
+  <param name="robot_description" command="$(find xacro)/xacro '$(arg model)'"/>
+  <param name="publish_frequency" value="20.0"/>
+  <param name="rate" value="20.0"/>
+
+<!--******************************** ROBOT AND JOINT STATE PUBLISHER *************************************************-->
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+  </node>
+
+  <!-- Provide simulated control of the robot joint angles-->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  <param name="use_gui" value="True" />
+  </node> 
+
+</launch>
+

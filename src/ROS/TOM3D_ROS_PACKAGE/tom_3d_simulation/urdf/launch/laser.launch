@@ -1,0 +1,13 @@
+
+<launch>
+
+    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find asr_mild_base_launch_files)/log/rosconsole.config" />
+    <node name="sick" pkg="asr_mild_base_laserscanner" type="asr_mild_base_laserscanner" output="screen" required="true"/>
+    <param name="topic" value="sick_pls/scan" />
+    <!-- Laserscanner baudrate. Only four values: 9600, 19200, 38400, 500000. 38400 means 4 complete measurements in 1 sec. -->
+    <param name="baudrate" value="38400" />
+    <param name="serial" value="/dev/ttyUSB0" />
+    <param name="init_attempts" value="10" />
+
+
+</launch>

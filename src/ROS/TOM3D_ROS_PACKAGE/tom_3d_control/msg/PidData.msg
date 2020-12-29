@@ -1,0 +1,2 @@
+float64 setpoint_data
+float64 measured_data

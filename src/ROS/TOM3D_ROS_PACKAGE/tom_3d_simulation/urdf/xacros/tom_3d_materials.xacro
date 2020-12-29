@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot name="tom_3d" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <material name="tom_3d/Black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+
+  <material name="tom_3d/Blue">
+    <color rgba="0.0 0.0 0.8 1.0"/>
+  </material>
+
+  <material name="tom_3d/Green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+
+  <material name="tom_3d/Grey">
+    <color rgba="0.7 0.7 0.7 1.0"/>
+  </material>
+
+  <material name="tom_3d/Grey2">
+    <color rgba="0.9 0.9 0.9 1.0"/>
+  </material>
+
+  <material name="tom_3d/Red">
+    <color rgba="0.8 0.0 0.0 1.0"/>
+  </material>
+
+  <material name="tom_3d/White">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+
+  <material name="tom_3d/Yellow">
+    <color rgba="1.0 1.0 0 10"/>
+  </material>
+</robot>

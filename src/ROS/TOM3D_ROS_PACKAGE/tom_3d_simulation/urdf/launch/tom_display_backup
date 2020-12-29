@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<launch>
+        <arg name="robotname" value="tom_3d"/>
+
+        <arg name="robotworld" value="empty.world"/>
+
+        <arg name="rvizconfig" default="$(find tom_3d_simulation)/urdf/tom_3d_config.rviz" />
+
+        <arg name="model" default="$(find tom_3d_simulation)/urdf/tom_3d.urdf.xacro"/>
+  
+        <arg name="gazebo" value="false" />
+
+        <arg name="laser_scanner" value="false"/>
+ 
+        <arg name="gmapping" value="false"/> 
+  
+        <arg name="hector_mapping" value="false"/> 
+ 
+        <arg name="amcl" value="false"/>
+
+        <arg name="navigation" value="true"/> 
+
+        <arg name="localplanner" value="dwa"/>
+  
+        <arg name="barc_launch" value="true"/>
+    
+        <arg name="pid_controller" value="true"/>
+        
+
+
+<!--**************************************** RVIZ LAUNCH ************************************************************-->
+ 
+  <param name="robot_description" command="$(find xacro)/xacro --inorder  '$(arg model)'"/>
+  <param name="publish_frequency" value="20.0"/>
+  <param name="rate" value="20.0"/>
+  
+
+<!--******************************** ROBOT AND JOINT STATE PUBLISHER *************************************************-->
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+  </node>
+
+  <!-- Provide simulated control of the robot joint angles -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  <param name="use_gui" value="false" />
+  </node> 
+
+<!--******************************** STATIC TRANSFORM *************************************************
+
+  <node pkg="tf" type="static_transform_publisher" name="laser_base" args="0.04839 -0.00057363 0.257 0 0 0 1 base_link sick_pls_link 100" />-->
+
+<!--**************************************** GAZEBO LAUNCH ************************************************************-->
+
+ <group if="$(arg gazebo)">
+  <arg name="world" default="empty"/> 
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>-->  
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launNodes only check that parameter at startup. Also, Rviz will display 'Wall Time' and 'ROS Time' in the lower leftch">
+     <arg name="world_name" value="$(find tom_3d_simulation)/worlds/$(arg robotworld)"/>
+     <arg name="paused" value="$(arg paused)"/>
+     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+     <arg name="gui" value="$(arg gui)"/>
+     <arg name="headless" value="$(arg headless)"/>
+     <arg name="debug" value="$(arg debug)"/>
+  </include>
+  
+  <include file="$(find tom_3d_simulation)/config/controller/launch/tom_3d_control.launch">
+     <arg name="model" value="$(arg model)"/>
+  </include>
+
+  <node name="$(arg robotname)_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+  args="-urdf -param robot_description -model $(arg robotname)" />
+ </group> 
+
+<!--***************************************** LASER SSCANNER ******************************************************** -->
+<!-- Laserscanner baudrate. Only four values: 9600, 19200, 38400, 500000. 38400 means 4 complete measurements in 1 sec. -->
+ <!--<group if="$(arg laser_scanner)">
+    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find asr_mild_base_launch_files)/log/rosconsole.config" />
+    <node name="sick" pkg="asr_mild_base_laserscanner" type="asr_mild_base_laserscanner" output="screen" required="true"/>
+    <param name="topic" value="sick_pls/scan" />
+    
+    <param name="baudrate" value="38400" />
+    <param name="serial" value="/dev/ttyUSB0" />
+    <param name="init_attempts" value="10" />
+ </group> -->
+
+<!--******************************************** BARC_LAUNCH **********************************************************-->
+  
+  <group if="$(arg barc_launch)">
+    <include file="$(find barc_launch)/launch/pioneer_nav.launch"/>
+ </group> 
+
+<!--******************************************** PID_CONTROLLER **********************************************************-->
+  
+  <group if="$(arg pid_controller)">
+    <include file="$(find tom_3d_control)/launch/tom_pid_controller_rpm.launch"/>
+ </group>
+
+<!--******************************************** ODOM TO BASE ***************************************************-->
+  
+  <node name="odom_to_base" pkg="tom_3d_control" type="odom_to_base">
+  </node> 
+  
+<!--******************************************** MAPPING **************************************************************-->
+ <group if="$(arg gmapping)">
+    <include file="$(find tom_3d_simulation)/config/gmapping/It seems you are not running AMCL. This node localizes the robot in a previously built map, and provide the map->odom transform, which is missing in your tree.launch/$(arg robotname)_gmapping.launch"/>
+ </group> 
+
+ <group if="$(arg hector_mapping)">
+    <include file="$(find hector_mapping)/launch/mapping_default.launch"/>
+    <include file="$(find hector_geotiff)/launch/geotiff_mapper.launch"/>
+ </group>
+
+<!--********************************************* AMCL ****************************************************************-->
+
+ <group if="$(arg amcl)">
+    <include file="$(find tom_3d_simulation)/config/amcl/launch/$(arg robotname)_amcl.launch"/>
+ </group>
+
+<!--******************************************* MOVE BASE *************************************************************-->
+
+ <group if="$(arg navigation)">
+    <include file="$(find tom_3d_simulation)/config/navigation/$(arg localplanner)_local_planner/$(arg robotname)_movebase_$(arg localplanner).launch"/>
+ </group> 
+
+
+</launch>
+

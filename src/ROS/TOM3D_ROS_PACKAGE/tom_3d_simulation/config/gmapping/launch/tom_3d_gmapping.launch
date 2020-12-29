@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+
+ <arg name="joystick" value="false"/>
+ <arg name="teleop_keyboard" value="false"/>
+  
+  <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
+    <remap from="scan" to="sick_pls/scan"/>
+    <rosparam file="$(find tom_3d_simulation)/config/gmapping/yaml/gmapping_config.yaml" command="load" />
+  </node>
+
+ <!-- Launch robot control-->
+ <group if="$(arg joystick)">
+ <include file="$(find neo_teleop)/ros/launch/teleop.launch"/>
+ </group>
+
+ <group if="$(arg teleop_keyboard)">
+  <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop">
+    <remap from="cmd_vel" to="tom_3d/cmd_vel"/>
+  </node>
+ </group>
+
+</launch>

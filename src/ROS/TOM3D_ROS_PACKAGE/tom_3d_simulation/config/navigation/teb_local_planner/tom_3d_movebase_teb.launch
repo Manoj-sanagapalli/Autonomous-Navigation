@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+  
+ <include file="$(find tom_3d_simulation)/config/amcl/launch/tom_3d_amcl.launch"/>
+
+ <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS"/>
+
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/costmaps/$(env ROBOT)_costmap_common.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/costmaps/$(env ROBOT)_costmap_common.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/costmaps/$(env ROBOT)_costmap_local.yaml" command="load" />
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/costmaps/$(env ROBOT)_costmap_global.yaml" command="load" />
+    <rosparam file="$(find tom_3d_simulation)/config/navigation/teb_local_planner/$(env ROBOT)_planner_teb.yaml" command="load" />
+
+     <remap from="/cmd_vel" to="/navigation/cmd_vel"/>
+  </node>
+
+</launch>

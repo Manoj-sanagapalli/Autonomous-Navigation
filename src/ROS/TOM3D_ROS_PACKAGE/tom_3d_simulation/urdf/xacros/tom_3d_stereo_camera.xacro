@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tom_3d">
+  <xacro:macro name="tom_3d_stereo_camera" params="name parent">
+   <joint name="${name}_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin xyz="0.03339 -0.00057363 0.586"/>
+    <parent link="${parent}"/>
+    <child link="${name}_link"/>
+   </joint>
+   <link name="camera_link">
+    <inertial>
+        <mass value="0.001"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+           <box size="0.07 0.19 0.07"/>
+       </geometry>
+     <material name="tom_3d/Black" />
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+           <box size="0.07 0.211 0.07"/>
+        </geometry>
+    </collision>
+   </link>
+  </xacro:macro>
+</robot>

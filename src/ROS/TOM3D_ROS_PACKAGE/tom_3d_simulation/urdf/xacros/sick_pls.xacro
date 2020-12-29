@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tom_3d">
+  <xacro:macro name="sick_laser_scanner" params="name parent">
+    <joint name="${name}_joint" type="fixed">
+      <axis xyz="0 0 0" />
+      <origin
+      xyz="0.04839 -0.00057363 0.257"
+      rpy="-6.983E-15 -8.3333E-10 2.9167E-09" />
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+    </joint>
+    <link name="${name}_link" type="laser">
+      <inertial>
+       <origin
+        xyz="0.07464 2.9656E-09 0.0005964"
+        rpy="0 0 0" />
+      <mass
+        value="4.803" />
+      <inertia
+        ixx="0.022714"
+        ixy="-6.4301E-09"
+        ixz="-0.0016489"
+        iyy="0.022161"
+        iyz="2.6112E-09"
+        izz="0.016889" />
+      </inertial>
+      <visual>
+        <origin xyz="-0.12 0 0.03" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://tom_3d_simulation/urdf/meshes/sick_pls_Link.STL"/>
+        </geometry>
+        <material name="tom_3d/Yellow" />
+      </visual>
+      <collision>
+        <origin xyz="-0.12 0 0.03" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://tom_3d_simulation/urdf/meshes/sick_pls_Link.STL"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+</robot>

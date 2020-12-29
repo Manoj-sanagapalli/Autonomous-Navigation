@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<robot name="tom_3d" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--GAZEBO REFERENCES 
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/tom_3d_gazebo.xacro" />-->
+
+  <!-- MATERIALS -->
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/tom_3d_materials.xacro" />
+
+  <!-- BODY -->
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/tom_3d_body.xacro" />
+ 
+  <!-- WHEELS -->
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/tom_3d_leftwheel.xacro" />
+ 
+  <!-- WHEELS -->
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/tom_3d_rightwheel.xacro" />
+
+  <!-- SENSORS  -->
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/sick_pls.xacro" />
+
+  <!-- CASTER WHEELS -->
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/tom_3d_caster_frame.xacro" /> 
+ 
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/tom_3d_caster_wheel.xacro" />
+
+  <!-- IMU 
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/tom_3d_imu.xacro" />-->
+
+  <!-- STEREO CAMERA
+  <xacro:include filename="$(find tom_3d_simulation)/urdf/xacros/tom_3d_stereo_camera.xacro" />--> 
+
+
+  <!-- Base Macro-->
+  <xacro:tom_3d_base name="base_link">
+  </xacro:tom_3d_base>
+
+  <!-- Wheel Macro -->
+  <xacro:tom_3d_leftwheel name="left_wheel" parent="base_link">
+  </xacro:tom_3d_leftwheel>
+
+  <xacro:tom_3d_rightwheel name="right_wheel" parent="base_link">
+  </xacro:tom_3d_rightwheel>
+
+  <!-- Sensors-->
+  <xacro:sick_laser_scanner name="sick_pls" parent="base_link">
+  </xacro:sick_laser_scanner> 
+
+    <!-- Caster Wheel Macro -->
+  <xacro:tom_3d_caster_frame name="caster_frame" parent="base_link">
+  </xacro:tom_3d_caster_frame>
+  
+  <xacro:tom_3d_caster_wheel name="caster_wheel" parent="caster_frame_link">
+  </xacro:tom_3d_caster_wheel>
+
+  <!-- IMU 
+  <xacro:tom_3d_imu name="imu" parent="base_link">
+  </xacro:tom_3d_imu>-->
+
+  <!-- STEREO CAMERA 
+  <xacro:tom_3d_stereo_camera name="camera" parent="base_link">
+  </xacro:tom_3d_stereo_camera>-->
+
+</robot>

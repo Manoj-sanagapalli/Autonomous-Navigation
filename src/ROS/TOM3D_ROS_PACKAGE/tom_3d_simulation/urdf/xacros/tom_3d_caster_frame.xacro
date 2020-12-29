@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tom_3d">
+
+  <xacro:macro name="tom_3d_caster_frame" params="name parent">
+   <link name="${name}_link">
+     <inertial>
+      <origin
+        xyz="-0.00055887 -0.028892 0.019123"
+        rpy="0 0 0" />
+      <mass
+        value="0.075875" />
+      <inertia
+        ixx="7.155E-05"
+        ixy="-1.5111E-06"
+        ixz="6.2761E-07"
+        iyy="5.4831E-05"
+        iyz="1.9534E-05"
+        izz="7.4518E-05" />
+     </inertial>
+     <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+         <mesh filename="package://tom_3d_simulation/urdf/meshes/caster_frame_Link.STL"/>
+      </geometry>
+      <material name="tom_3d/Grey" />
+     </visual>
+     <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://tom_3d_simulation/urdf/meshes/caster_frame_Link.STL"/>
+      </geometry>
+     </collision>
+   </link>
+   <joint name="${name}_joint" type="continuous">
+     <origin
+      xyz="-0.27411 0 0.102114"
+      rpy="1.5708 6.9774E-15 1.6109" />
+     <axis xyz="0 1 0" />
+     <parent link="${parent}" />
+     <child link="${name}_link" />
+   </joint>
+  </xacro:macro>
+</robot>
+
+

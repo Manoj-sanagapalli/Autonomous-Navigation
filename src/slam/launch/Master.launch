@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<launch>
+
+        <arg name="robotname" value="tom_3d"/>
+
+        <arg name="robotworld" value="empty.world"/>
+
+        <arg name="rvizconfig" default="$(find tom_3d_simulation)/urdf/tom_3d_config.rviz" />
+
+        <arg name="model" default="$(find tom_3d_simulation)/urdf/tom_3d.urdf.xacro"/>
+  
+        <arg name="navigation" value="true"/> 
+
+        <arg name="localplanner" value="dwa"/>
+  
+        <arg name="barc_launch" value="true"/>
+    
+        <arg name="pid_controller" value="true"/>
+
+
+
+  <!--**************************************** RVIZ LAUNCH ************************************************************-->
+ 
+  <param name="robot_description" command="$(find xacro)/xacro --inorder  '$(arg model)'"/>
+  <param name="publish_frequency" value="20.0"/>
+  <param name="rate" value="20.0"/>
+
+
+
+  <!--******************************** ROBOT AND JOINT STATE PUBLISHER *************************************************-->
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+  </node>
+
+  <!-- Provide simulated control of the robot joint angles -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  <param name="use_gui" value="false" />
+  </node> 
+
+  <!--********************************* kinect_camera*********************************************************************-->
+  <include file = "$(find kinect2_bridge)/launch/kinect2_bridge.launch"/>
+   <arg name="publish_tf" value="true"/>
+  
+  
+  <!--******************************** STATIC TRANSFORM *************************************************-->
+
+  <node pkg="tf" type="static_transform_publisher" name="bot_camera" args="0 0 0.16 0 0 0 sick_pls_link camera_link 100" />
+  
+  <!--******************************************** BARC_LAUNCH **********************************************************-->
+  
+  <group if="$(arg barc_launch)">
+    <include file="$(find barc_launch)/launch/pioneer_nav.launch"/>
+  </group> 
+
+  <!--******************************************** PID_CONTROLLER **********************************************************-->
+  
+  <group if="$(arg pid_controller)">
+    <include file="$(find tom_3d_control)/launch/tom_pid_controller_rpm.launch"/>
+  </group>
+
+  <!--******************************************** ODOM TO BASE ************************************************************-->
+  
+  <node name="odom_to_base" pkg="tom_3d_control" type="odom_to_base">
+  </node> 
+ 
+  <!--********************************************** MAPPING ***************************************************************-->
+
+  <include file="$(find rtabmap_ros)/launch/rtabmap.launch" />
+
+  <!--********************************************** NAVIGATION ************************************************************-->
+
+  <!--******************************************* MOVE BASE *************************************************************-->
+
+  <group if="$(arg navigation)">
+     <include file="$(find tom_3d_simulation)/config/navigation/$(arg localplanner)_local_planner/$(arg robotname)_movebase_$(arg localplanner).launch"/>
+  </group> 
+
+</launch>
